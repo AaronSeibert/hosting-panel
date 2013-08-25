@@ -1,0 +1,33 @@
+<h1>Listing urls</h1>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Ulr</th>
+        <th>Site</th>
+        <th>Ssl enabled</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+  
+    <tbody>
+      <% @urls.each do |url| %>
+        <tr>
+          <td><%= url.ulr %></td>
+          <td><%= url.site %></td>
+          <td><%= url.ssl_enabled %></td>
+          <td><%= link_to 'Show', url %></td>
+          <td><%= link_to 'Edit', edit_url_path(url) %></td>
+          <td><%= link_to 'Destroy', url, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<br>
+
+<%= link_to 'New Url', new_url_path %>

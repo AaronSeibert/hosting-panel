@@ -1,0 +1,13 @@
+<%= form_for(@client, html: { :class => "form-horizontal", :role => "form" }) do |f| %>
+  
+<div class="modal-body">
+  <div class="form-group">
+    <%= f.label :name, :class => "col-lg-2 control-label" %>
+    <div class="col-lg-10">
+      <%= f.text_field :name %>
+    </div>
+  </div>
+</div>
+<%= render partial: "global/forms/modal_footer", locals: { :f => f } %>
+<% end %>
+

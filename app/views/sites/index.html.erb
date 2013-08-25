@@ -1,0 +1,29 @@
+<h1>Listing sites</h1>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Client</th>
+        <th>Description</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+  
+    <tbody>
+      <% @sites.each do |site| %>
+        <tr>
+          <td><%= site.client.name %></td>
+          <td><%= site.description %></td>
+          <td><%= link_to 'Show', client_sites_path(site.client, site) %></td>
+          <td><%= link_to 'Edit', edit_client_site_path(site.client, site) %></td>
+          <td><%= link_to 'Destroy', client_site_path(site.client, site), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<br>
