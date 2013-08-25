@@ -1,4 +1,15 @@
 HostingPanel::Application.routes.draw do
+  resources :urls
+
+  resources :plans
+  
+  resources :sites, :only => [ :index ]
+
+  resources :clients do
+    resources :sites
+  end
+
+  root :to => "welcome#index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  ulr: MyString
+  site_id: 
+  ssl_enabled: false
+
+two:
+  ulr: MyString
+  site_id: 
+  ssl_enabled: false

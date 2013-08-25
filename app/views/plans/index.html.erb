@@ -1,0 +1,33 @@
+<h1>Listing plans</h1>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Remote</th>
+        <th>Price</th>
+        <th>Description</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+  
+    <tbody>
+      <% @plans.each do |plan| %>
+        <tr>
+          <td><%= plan.remote_id %></td>
+          <td><%= plan.price %></td>
+          <td><%= plan.description %></td>
+          <td><%= link_to 'Show', plan %></td>
+          <td><%= link_to 'Edit', edit_plan_path(plan) %></td>
+          <td><%= link_to 'Destroy', plan, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<br>
+
+<%= link_to 'New Plan', new_plan_path %>

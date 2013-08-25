@@ -1,0 +1,36 @@
+<h1>Listing All Clients</h1>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Active Sites</th>
+        <th>Active URLs</th>
+        <th></th>
+      </tr>
+    </thead>
+  
+    <tbody>
+      <% @clients.each do |client| %>
+        <tr>
+          <td><%= client.name %></td>
+          <td><%= client.sites.count %></td>
+          <td><%= client.urls.count %></td>
+          <td>
+            <%= link_to content_tag(:i, " Add Site", :class => "icon-plus"), new_client_site_path(client, :format => :js), :class=>"btn btn-success btn-xs modal-form", :remote => true, data:{ toggle: "modal", target: "#modal-window" } %>
+            <%= link_to content_tag(:i, " Edit Client", :class => "icon-edit"), edit_client_path(client, :format => :js), :class=>"btn btn-primary btn-xs modal-form", :remote => true, data:{ toggle: "modal", target: "#modal-window" } %>
+            <%= link_to content_tag(:i, " Delete Client", :class => "icon-remove"), client, method: :delete, :class=>"btn btn-danger btn-xs", data: { title: "Delete Client", message: "Are you sure you want to delete " + client.name + "?"} %>
+          </td>
+          <!-- old tags
+            
+            client, method: :delete, data: { confirm: "Confirm Deletion" }
+          -->
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<br>
+
+<%= link_to content_tag(:i, " New Client", :class => "icon-plus"), new_client_path(:format => :js), :class=>"btn btn-success btn-xs modal-form", :remote => true, data:{ toggle: "modal", target: "#modal-window" } %>
