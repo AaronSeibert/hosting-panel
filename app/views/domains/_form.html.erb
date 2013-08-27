@@ -1,10 +1,10 @@
-<%= form_for(@url) do |f| %>
-  <% if @url.errors.any? %>
+<%= form_for(@domain) do |f| %>
+  <% if @domain.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@url.errors.count, "error") %> prohibited this url from being saved:</h2>
+      <h2><%= pluralize(@domain.errors.count, "error") %> prohibited this domain from being saved:</h2>
 
       <ul>
-      <% @url.errors.full_messages.each do |msg| %>
+      <% @domain.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
@@ -12,8 +12,8 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :ulr %><br>
-    <%= f.text_field :ulr %>
+    <%= f.label :domain %><br>
+    <%= f.text_field :domain %>
   </div>
   <div class="field">
     <%= f.label :site %><br>

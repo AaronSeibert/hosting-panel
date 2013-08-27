@@ -4,7 +4,11 @@ class SitesController < ApplicationController
   # GET /sites
   # GET /sites.json
   def index
-    @sites = Site.all
+    if params[:client_id].blank?
+      @sites = Site.all
+    else
+      @sites = Client.find(params[:client_id]).sites
+    end
   end
 
   # GET /sites/1
@@ -16,17 +20,19 @@ class SitesController < ApplicationController
   def new
     @client = Client.find(params[:client_id])
     @site = @client.sites.build
+    @site.domains.build
   end
 
   # GET /sites/1/edit
   def edit
+    @site.domains.build unless not @site.domains.empty?
+    @client = @site.client
   end
 
   # POST /sites
   # POST /sites.json
   def create
-    @client = Client.find(params[:client_id])
-    @site = @client.sites.build(site_params)
+    @site = Site.new(site_params)
 
     respond_to do |format|
       if @site.save
@@ -71,6 +77,8 @@ class SitesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def site_params
-      params.require(:site).permit(:client_id, :description, :plan_id)
+      params.require(:site).permit(:client_id, :description, :plan_id,
+        :domains_attributes => [:id, :site_id, :domain, :ssl_enabled]
+      )
     end
 end

@@ -1,0 +1,12 @@
+<div class="form-group">
+  <div class="col-lg-8">
+    <%= f.label :url, :class => "sr-only" %>
+    <%= f.text_field :url, :placeholder => "Primary Domain", :class => "form-control" %>
+  </div>
+  <div class="col-lg-4">
+    <%= f.label :ssl_enabled, :class => "control-label" do %>
+      <%= f.check_box :ssl_enabled %>
+      SSL Enabled
+    <% end %>
+  </div>
+</div>
