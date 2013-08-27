@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Ulr:</strong>
+  <%= @domain.domain %>
+</p>
+
+<p>
+  <strong>Site:</strong>
+  <%= @domain.site %>
+</p>
+
+<p>
+  <strong>Ssl enabled:</strong>
+  <%= @domain.ssl_enabled %>
+</p>
+
+<%= link_to 'Edit', edit_domain_path(@domain) %> |
+<%= link_to 'Back', domains_path %>

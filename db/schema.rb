@@ -11,13 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130823192349) do
+ActiveRecord::Schema.define(version: 20130827005045) do
 
   create_table "clients", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "domains", force: true do |t|
+    t.string   "url"
+    t.integer  "site_id"
+    t.boolean  "ssl_enabled"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "domains", ["site_id"], name: "index_domains_on_site_id"
 
   create_table "plans", force: true do |t|
     t.string   "remote_id"
@@ -30,22 +40,11 @@ ActiveRecord::Schema.define(version: 20130823192349) do
   create_table "sites", force: true do |t|
     t.integer  "client_id"
     t.integer  "plan_id"
-    t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "sites", ["client_id"], name: "index_sites_on_client_id"
   add_index "sites", ["plan_id"], name: "index_sites_on_plan_id"
-
-  create_table "urls", force: true do |t|
-    t.string   "ulr"
-    t.integer  "site_id"
-    t.boolean  "ssl_enabled"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "urls", ["site_id"], name: "index_urls_on_site_id"
 
 end
