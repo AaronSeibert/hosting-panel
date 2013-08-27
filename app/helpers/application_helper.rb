@@ -1,5 +1,9 @@
 module ApplicationHelper
   
+  def modal_flash(object, type)
+    render "global/forms/modal_flash", :object => object, :type => type
+  end
+  
   def flash_class(level)
     case level
       when :success then "alert-success"

@@ -39,6 +39,13 @@ class SitesController < ApplicationController
         format.html { redirect_to clients_url, success: 'Site was successfully created.' }
         format.json { render action: 'show', status: :created, location: @site }
       else
+        logger.error "There were some errors - "
+        logger.error @site.errors.count()
+        
+        @client = Client.find(@site.client_id)
+        
+
+        format.js   { render action: 'new' }
         format.html { render action: 'new' }
         format.json { render json: @site.errors, status: :unprocessable_entity }
       end
@@ -52,8 +59,10 @@ class SitesController < ApplicationController
       if @site.update(site_params)
         format.html { redirect_to clients_url, success: 'Site was successfully updated.' }
         format.json { head :no_content }
+        format.js   { redirect_to clients_url, :format => :html, success: 'Site was successfully updated.' }
       else
         format.html { render action: 'edit' }
+        format.js   { render action: 'edit' }
         format.json { render json: @site.errors, status: :unprocessable_entity }
       end
     end
@@ -77,8 +86,8 @@ class SitesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def site_params
-      params.require(:site).permit(:client_id, :description, :plan_id,
-        :domains_attributes => [:id, :site_id, :domain, :ssl_enabled]
+      params.require(:site).permit(:client_id, :description, :plan_id, :primary_domain_id, 
+        :domains_attributes => [:id, :site_id, :url, :ssl_enabled]
       )
     end
 end
