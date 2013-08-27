@@ -1,25 +1,32 @@
 # Override Rails handling of confirmation
 
 # Create our function for detecting modal form button clicks
-bindModalClick = ->
-  console.log "Binding click functions"
+bindModalForm = ->
   $(".modal-form").click ->
-    console.log "Loading modal form"
     href = $(@).attr "href"
-    console.log "Target is: " + href
     $.get href, (data) ->
       $("#modal-content").html data
       
 fadeFlashMessages = ->
-  console.log "Binding alert fades"
   $(".alert").delay(2000).fadeOut(2000)
     
 onLoadEvents = ->
-  console.log "Loading on page load events"
-  bindModalClick()
+
   fadeFlashMessages()  
       
 $(document).on 'ready page:load', onLoadEvents
+
+# Handle ajax form errors
+$(document).on 'ajax:success', 'form[data-remote]', (xhr, data, status) ->
+  # do something with `data`, which is a JS object from your JSON response
+  $("#modal-window").modal('hide')
+  document.open()
+  document.write(data)
+  document.close()
+  
+$(document).on 'ajax:error', 'form[data-remote]', (xhr, data, status) ->
+  # do something with `data`, which is a JS object from your JSON response
+  console.log data
 
 $.rails.allowAction = (element) ->
   # The title is something like "Are you sure?"
