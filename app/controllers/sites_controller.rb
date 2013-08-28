@@ -57,9 +57,9 @@ class SitesController < ApplicationController
   def update
     respond_to do |format|
       if @site.update(site_params)
-        format.html { redirect_to clients_url, success: 'Site was successfully updated.' }
+        format.html { redirect_to sites_url, success: 'Site was successfully updated.' }
         format.json { head :no_content }
-        format.js   { redirect_to clients_url, :format => :html, success: 'Site was successfully updated.' }
+        format.js   { redirect_to sites_url, :format => :html, success: 'Site was successfully updated.' }
       else
         format.html { render action: 'edit' }
         format.js   { render action: 'edit' }

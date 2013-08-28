@@ -10,9 +10,20 @@
       <p class="form-control-static"><%= @client.name %></p>
     </div>
   </div>
-    <%= f.fields_for :domains do |domain| %>
-        <%= render 'domain_fields', :f => domain %>
-    <% end %>
+  <div class="form-group">
+    <%= f.label :plan, :class => "col-lg-3 control-label" %>
+    <div class="col-lg-9">
+      <%= f.collection_select(:plan_id, Plan.all, :id, :description, {}, { :class => "form-control" }) %>
+    </div>
+  </div>
+  <fieldset>
+    <legend>Site Domains</legend>
+    <div class="form-group">
+      <%= f.fields_for :domains do |builder| %>
+        <%= render 'domain_fields', :f => builder %>
+      <% end %>
+    </div>
+  </fieldset>
 </div>
 <%= render partial: "global/forms/modal_footer", locals: { :f => f } %>
 <% end %>

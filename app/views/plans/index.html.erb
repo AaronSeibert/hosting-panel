@@ -4,12 +4,10 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>Remote</th>
+        <th>Remote Plan ID</th>
         <th>Price</th>
+        <th>Billing Interval</th>
         <th>Description</th>
-        <th></th>
-        <th></th>
-        <th></th>
       </tr>
     </thead>
   
@@ -17,11 +15,9 @@
       <% @plans.each do |plan| %>
         <tr>
           <td><%= plan.remote_id %></td>
-          <td><%= plan.price %></td>
+          <td><%= number_to_currency(plan.price) %></td>
+          <td><%= plan.interval_count %> <%= plan.interval %></td>
           <td><%= plan.description %></td>
-          <td><%= link_to 'Show', plan %></td>
-          <td><%= link_to 'Edit', edit_plan_path(plan) %></td>
-          <td><%= link_to 'Destroy', plan, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
       <% end %>
     </tbody>
@@ -29,5 +25,3 @@
 </div>
 
 <br>
-
-<%= link_to 'New Plan', new_plan_path %>

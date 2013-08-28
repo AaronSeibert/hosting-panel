@@ -25,13 +25,14 @@ class ClientsController < ApplicationController
   # POST /clients.json
   def create
     @client = Client.new(client_params)
-
+    @client[:stripe_customer_id] = create_stripe_customer(@client)
     respond_to do |format|
       if @client.save
         format.html { redirect_to clients_url, success: 'Client was successfully created.' }
         format.json { render action: 'show', status: :created, location: @client }
       else
         format.html { render action: 'new' }
+        format.js   { render action: 'new' }
         format.json { render json: @client.errors, status: :unprocessable_entity }
       end
     end
@@ -46,6 +47,7 @@ class ClientsController < ApplicationController
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
+        format.js   { render action: 'edit' }
         format.json { render json: @client.errors, status: :unprocessable_entity }
       end
     end
@@ -62,6 +64,9 @@ class ClientsController < ApplicationController
   end
 
   private
+    def create_stripe_customer(client)
+      return Stripe::Customer.create(:description => client.name, :card => client.stripe_card_token).id
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_client
       @client = Client.find(params[:id])
@@ -69,6 +74,6 @@ class ClientsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def client_params
-      params.require(:client).permit(:name)
+      params.require(:client).permit(:name, :stripe_customer_id, :stripe_card_token)
     end
 end

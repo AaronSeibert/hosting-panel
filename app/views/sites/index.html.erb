@@ -7,6 +7,8 @@
         <th>ID</th>
         <th>Client</th>
         <th>Active URLs</th>
+        <th>Primary Domain</th>
+        <th>Plan</th>
       </tr>
     </thead>
   
@@ -16,6 +18,8 @@
           <td><%= site.id %></td>
           <td><%= site.client.name %></td>
           <td><%= site.domains.count %></td>
+          <td><%= site.primary_domain %></td>
+          <td><%= site.plan.description %></td>
           <td>
             <%= link_to content_tag(:i, " Edit Site", :class => "icon-edit"), edit_site_path(site, :format => :js), :class=>"btn btn-primary btn-xs modal-form", :remote => true, data:{ toggle: "modal", target: "#modal-window" } %>
             <%= link_to content_tag(:i, " Delete Site", :class => "icon-remove"), site, method: :delete, :class=>"btn btn-danger btn-xs", data: { title: "Delete Site", message: "Are you sure you want to delete this site?"} %>

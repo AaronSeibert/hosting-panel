@@ -1,5 +1,3 @@
-# Override Rails handling of confirmation
-
 # Create our function for detecting modal form button clicks
 bindModalForm = ->
   $(".modal-form").click ->
@@ -11,7 +9,6 @@ fadeFlashMessages = ->
   $(".alert").delay(2000).fadeOut(2000)
     
 onLoadEvents = ->
-
   fadeFlashMessages()  
       
 $(document).on 'ready page:load', onLoadEvents
