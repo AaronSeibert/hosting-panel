@@ -1,5 +1,5 @@
 module ApplicationHelper
-  
+
   def modal_flash(object, type)
     render "global/forms/modal_flash", :object => object, :type => type
   end

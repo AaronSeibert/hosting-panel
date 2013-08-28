@@ -1,9 +1,14 @@
 <div class="form-group">
-  <div class="col-lg-8">
+  <% if f.options[:child_index] == 0 %>
+    <%= f.label "Primary Domain:", :class => "control-label col-lg-4" %>
+  <% else %>
+    <%= f.label "Additional Domain:", :class => "control-label col-lg-4" %>
+  <% end %>
+  <div class="col-lg-5">
     <%= f.label :url, :class => "sr-only" %>
-    <%= f.text_field :url, :placeholder => "Primary Domain", :class => "form-control" %>
+    <%= f.text_field :url, :placeholder => "Ex: domain.com", :class => "form-control" %>
   </div>
-  <div class="col-lg-4">
+  <div class="checkbox col-lg-3">
     <%= f.label :ssl_enabled, :class => "control-label" do %>
       <%= f.check_box :ssl_enabled %>
       SSL Enabled

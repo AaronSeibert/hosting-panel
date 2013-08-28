@@ -7,6 +7,9 @@
         <th>Name</th>
         <th>Active Sites</th>
         <th>Active URLs</th>
+        <th>Monthly Bill</th>
+        <th>Biannual Bill</th>
+        <th>Annual Bill</th>
         <th></th>
       </tr>
     </thead>
@@ -17,6 +20,9 @@
           <td><%= client.name %></td>
           <td><%= link_to client.sites.count, sites_path(:client_id => client) %></td>
           <td><%= link_to client.domains.count, domains_path(:client_id => client) %></td>
+          <td><%= number_to_currency(client.billing_amount("month"))%></td>
+          <td><%= number_to_currency(client.billing_amount("biannual"))%></td>
+          <td><%= number_to_currency(client.billing_amount("annual"))%></td>
           <td>
             <%= link_to content_tag(:i, " Add Site", :class => "icon-plus"), new_site_path(:client_id => client, :format => :js), :class=>"btn btn-success btn-xs modal-form", :remote => true, data:{ toggle: "modal", target: "#modal-window" } %>
             <%= link_to content_tag(:i, " Edit Client", :class => "icon-edit"), edit_client_path(client, :format => :js), :class=>"btn btn-primary btn-xs modal-form", :remote => true, data:{ toggle: "modal", target: "#modal-window" } %>
@@ -33,4 +39,4 @@
 </div>
 <br>
 
-<%= link_to content_tag(:i, " New Client", :class => "icon-plus"), new_client_path(:format => :js), :class=>"btn btn-success btn-xs modal-form", :remote => true, data:{ toggle: "modal", target: "#modal-window" } %>
+<%= link_to content_tag(:i, " New Client", :class => "icon-plus"), new_client_path(), :class=>"btn btn-success btn-xs new-client-modal-form-init", :remote => true, data:{ toggle: "modal", target: "#modal-window" } %>
