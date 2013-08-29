@@ -50,7 +50,7 @@ class Plan < ActiveRecord::Base
   end
   
   def prorated_charge
-    return ((self.price/self.days_between_interval)*self.days_until_next_bill_date).to_f.ceil
+    return ((self.price/self.days_between_interval)*self.days_until_next_bill_date).to_f.round(2)
   end
   
   def self.intervals

@@ -1,4 +1,7 @@
-<%= form_for(@site, :remote => true, :html => {:class => "form-horizontal", :role => "form"}) do |f| %> 
+<%= form_for(@site, :remote => true, :html => {:class => "form-horizontal", :role => "form"}) do |f| %>
+<script>
+  var CURRENT_DOMAIN = "<%= request.base_url %>";
+</script>
 <%= f.hidden_field :client_id %>  
 <div class="modal-body">
   <div id="form-errors">
@@ -16,6 +19,9 @@
       <%= f.collection_select(:plan_id, Plan.all, :id, :description, {}, { :class => "form-control" }) %>
     </div>
   </div>
+  <% if @site.new_record? %>
+    <%= render "billing_details" %>
+  <% end %>
   <fieldset>
     <legend>Site Domains</legend>
     <div class="form-group">

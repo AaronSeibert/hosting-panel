@@ -10,6 +10,12 @@ class PlansController < ApplicationController
   # GET /plans/1
   # GET /plans/1.json
   def show
+
+    respond_to do |format|
+      format.html {}
+      format.json { render json: @plan, status: :ok, :methods => [:next_bill_date, :days_until_next_bill_date, :prorated_charge] } 
+
+    end
   end
 
   # GET /plans/new
