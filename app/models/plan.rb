@@ -1,6 +1,58 @@
 class Plan < ActiveRecord::Base
   has_many :sites
   
+  def next_bill_date
+    case self.interval
+    when "month"
+      case self.interval_count
+      when 1
+        return Time.now.at_beginning_of_month.next_month.utc
+      when 6
+        case Time.now.utc.month
+        when 1..6
+          return Time.new(Time.now.utc.year, 7, 1).utc
+        when 7..12
+          return Time.new(Time.now.utc.year+1, 1, 1).utc
+        end
+      end
+
+    when "year"
+      return Time.new(Time.now.utc.year+1, 1, 1).utc
+
+    end
+  end
+  
+  def days_until_next_bill_date
+    current_date = Time.now.utc
+    next_date = self.next_bill_date
+    return ((next_date - current_date)/1.day).ceil
+  end
+  
+  def days_between_interval
+    case self.interval
+    when "month"
+      case self.interval_count
+      when 1
+        return ((Time.now.at_beginning_of_month.next_month.utc - Time.now.at_beginning_of_month.utc)/1.day).ceil
+      when 6
+        case Time.now.utc.month
+        when 1..6
+          return ((Time.new(Time.now.year, 6, 30).utc - Time.new(Time.now.year, 1, 1).utc)/1.day).ceil
+        when 7..12
+          return ((Time.new(Time.now.year, 12, 31).utc - Time.new(Time.now.year, 7, 1).utc)/1.day).ceil
+        end
+      end
+
+    when "year"
+      return ((Time.new(Time.now.year+1, 1, 1).utc - Time.new(Time.now.year, 1, 1).utc)/1.day).ceil
+
+    end
+  end
+  
+  def prorated_charge
+    return ((self.price/self.days_between_interval)*self.days_until_next_bill_date).to_f.ceil
+  end
+  
   def self.intervals
     return ["month", "biannual", "annual"]
   end

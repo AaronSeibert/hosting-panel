@@ -38,13 +38,8 @@ class SitesController < ApplicationController
       if @site.save
         format.html { redirect_to clients_url, success: 'Site was successfully created.' }
         format.json { render action: 'show', status: :created, location: @site }
-      else
-        logger.error "There were some errors - "
-        logger.error @site.errors.count()
-        
+      else  
         @client = Client.find(@site.client_id)
-        
-
         format.js   { render action: 'new' }
         format.html { render action: 'new' }
         format.json { render json: @site.errors, status: :unprocessable_entity }
