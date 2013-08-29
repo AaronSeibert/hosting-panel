@@ -24,7 +24,7 @@
           <td><%= number_to_currency(client.billing_amount("biannual"))%></td>
           <td><%= number_to_currency(client.billing_amount("annual"))%></td>
           <td>
-            <%= link_to content_tag(:i, " Add Site", :class => "icon-plus"), new_site_path(:client_id => client, :format => :js), :class=>"btn btn-success btn-xs modal-form", :remote => true, data:{ toggle: "modal", target: "#modal-window" } %>
+            <%= link_to content_tag(:i, " Add Site", :class => "icon-plus"), new_site_path(:client_id => client, :format => :js), :class=>"btn btn-success btn-xs new-site-modal-form-init", :remote => true, data:{ toggle: "modal", target: "#modal-window" } %>
             <%= link_to content_tag(:i, " Edit Client", :class => "icon-edit"), edit_client_path(client, :format => :js), :class=>"btn btn-primary btn-xs modal-form", :remote => true, data:{ toggle: "modal", target: "#modal-window" } %>
             <%= link_to content_tag(:i, " Delete Client", :class => "icon-remove"), client, method: :delete, :class=>"btn btn-danger btn-xs", data: { title: "Delete Client", message: "Are you sure you want to delete " + client.name + "?"} %>
           </td>
