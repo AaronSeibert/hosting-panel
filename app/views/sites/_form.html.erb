@@ -1,3 +1,4 @@
+<%= render partial: 'global/forms/modal_header', locals: {:title => "Add New Site"} %>
 <%= form_for(@site, :remote => true, :html => {:class => "form-horizontal", :role => "form"}) do |f| %>
 <script>
   var CURRENT_DOMAIN = "<%= request.base_url %>";
