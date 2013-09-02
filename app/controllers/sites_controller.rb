@@ -34,6 +34,8 @@ class SitesController < ApplicationController
   def create
     @site = Site.new(site_params)
 
+    # TODO add saving subscription to stripe
+
     respond_to do |format|
       if @site.save
         format.html { redirect_to clients_url, success: 'Site was successfully created.' }
