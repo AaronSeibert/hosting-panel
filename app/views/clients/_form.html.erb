@@ -1,3 +1,4 @@
+<%= render partial: 'global/forms/modal_header', locals: {:title => "Add New Client"} %>
 <%= form_for(@client, :remote => true, :html => {:class => "form-horizontal", :role => "form"}) do |f| %> 
 <div class="modal-body">
   <div id="form-errors">
