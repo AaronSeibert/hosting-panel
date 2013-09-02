@@ -29,6 +29,7 @@
       <%= f.fields_for :domains do |builder| %>
         <%= render 'domain_fields', :f => builder %>
       <% end %>
+      <!-- TODO: work on this functionality <%= content_tag(:button, "Add Domain", :class => "btn btn-primary add-child-btn", data:{iterator: 1}) %> -->
     </div>
   </fieldset>
 </div>
