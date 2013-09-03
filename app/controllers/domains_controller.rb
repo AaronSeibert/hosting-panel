@@ -1,4 +1,5 @@
 class DomainsController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_domain, only: [:show, :edit, :update, :destroy]
 
   # GET /domains
