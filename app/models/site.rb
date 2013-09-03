@@ -1,8 +1,11 @@
 class Site < ActiveRecord::Base
     
+  has_many :domains, dependent: :destroy
+  has_one :subscription, dependent: :destroy
+  
   belongs_to :client
-  has_many :domains
   belongs_to :plan
+
 
   accepts_nested_attributes_for :domains
   validates_associated :domains

@@ -43,6 +43,7 @@ class SitesController < ApplicationController
         @subscription = @site.client.subscriptions.build 
         @subscription.plan = @site.plan
         @subscription.next_bill_date = @site.plan.next_bill_date
+        @subscription.site = @site
         @subscription.save
     
         format.html { redirect_to clients_url, success: 'Site was successfully created.' }
