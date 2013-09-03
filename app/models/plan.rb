@@ -1,5 +1,6 @@
 class Plan < ActiveRecord::Base
   has_many :sites
+  has_many :subscriptions
   
   def next_bill_date
     case self.interval

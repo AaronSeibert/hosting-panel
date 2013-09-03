@@ -38,6 +38,13 @@ class SitesController < ApplicationController
 
     respond_to do |format|
       if @site.save
+        
+        # Add this site to our subscriptions model
+        @subscription = @site.client.subscriptions.build 
+        @subscription.plan = @site.plan
+        @subscription.next_bill_date = @site.plan.next_bill_date
+        @subscription.save
+    
         format.html { redirect_to clients_url, success: 'Site was successfully created.' }
         format.json { render action: 'show', status: :created, location: @site }
       else  
