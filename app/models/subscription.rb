@@ -1,6 +1,7 @@
 class Subscription < ActiveRecord::Base
   belongs_to :client
   belongs_to :plan
+  belongs_to :site
   
   def self.create_invoices
     # For testing only!!!
@@ -17,7 +18,7 @@ class Subscription < ActiveRecord::Base
             :customer => s.client.stripe_customer_id,
             :amount => (s.plan.price*100).floor,
             :currency => "usd",
-            :description => s.plan.description
+            :description => s.plan.description + " - " + s.site.domains.first.url
           )
           s.last_invoiced = Date.today
           s.next_bill_date = s.plan.next_bill_date
