@@ -1,4 +1,5 @@
 class SitesController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_site, only: [:show, :edit, :update, :destroy]
 
   # GET /sites
@@ -34,8 +35,6 @@ class SitesController < ApplicationController
   def create
     @site = Site.new(site_params)
 
-    # TODO add saving subscription to stripe
-
     respond_to do |format|
       if @site.save
         
@@ -45,6 +44,22 @@ class SitesController < ApplicationController
         @subscription.next_bill_date = @site.plan.next_bill_date
         @subscription.site = @site
         @subscription.save
+        
+        # Create the pro-rated charge
+        begin
+          Stripe::InvoiceItem.create(
+            :customer => @site.client.stripe_customer_id,
+            :amount => (@site.plan.prorated_charge*100).floor,
+            :currency => "usd",
+            :description => @site.plan.description + " - Pro-rated Charge for " + @site.domains.first.url
+          )
+          invoice = Stripe::Invoice.create(
+            :customer => @site.client.stripe_customer_id
+          )
+          invoice.pay
+        rescue Exception => exc
+          logger.error("Oh no! There was an error adding the invoice item: #{exc.message}")
+        end
     
         format.html { redirect_to clients_url, success: 'Site was successfully created.' }
         format.json { render action: 'show', status: :created, location: @site }
@@ -60,6 +75,9 @@ class SitesController < ApplicationController
   # PATCH/PUT /sites/1
   # PATCH/PUT /sites/1.json
   def update
+    
+    # TODO: Modify subscription (refund remainder of current, prorate new)
+    
     respond_to do |format|
       if @site.update(site_params)
         format.html { redirect_to sites_url, success: 'Site was successfully updated.' }
