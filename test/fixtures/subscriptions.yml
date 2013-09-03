@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  client_id_id: 
+  plan_id_id: 
+  next_bill_date: 2013-09-03
+
+two:
+  client_id_id: 
+  plan_id_id: 
+  next_bill_date: 2013-09-03
