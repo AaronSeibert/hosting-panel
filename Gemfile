@@ -44,6 +44,9 @@ gem 'font-awesome-rails'
 # devise
 gem 'devise'
 
+# rufus
+gem 'rufus-scheduler'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
