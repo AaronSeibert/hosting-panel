@@ -16,3 +16,4 @@
 /tmp
 config/initializers/stripe.rb
 config/database.yml
+config/deploy.rb

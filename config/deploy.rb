@@ -12,7 +12,7 @@ set :scm_verbose, true
   
 # roles (servers)
 role :web, "ewrpweb01a.binaryitsystems.com", "ewrpweb01b.binaryitsystems.com"
-role :app, "ewrpweb01a.binaryitsystems.com", "ewrpweb01b.binaryitsystems.com"
+role :app, "ewrpmgmt01.binaryitsystems.com"
 role :db,  "ewrpsql01a.binaryitsystems.com", :primary => true
    
 # deploy config
