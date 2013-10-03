@@ -12,6 +12,7 @@ end
 
 group :production do
   gem 'mysql2'
+  gem 'execjs'
 end
 
 # Use capistrano for deployment
