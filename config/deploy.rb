@@ -1,19 +1,18 @@
 require 'bundler/capistrano'
-set :user, ''
+set :user, 'aaron.seibert'
 set :applicationdir, "/var/www/vhosts/#{domain}"
+set :gateway, 'aaron.seibert@ewrpmgmt01.binaryitsystems.com'
 
-set :web_servers, "ewrpweb01a.binaryitsystems.com", "ewrpweb01b.binaryitsystems.com"
- 
 set :scm, 'git'
-set :repository,  "git@github.com:Lateral-October/hosting-panel.git"
+set :repository,  "https://github.com/Lateral-October/hosting-panel.git"
 set :git_enable_submodules, 1 # if you have vendored rails
 set :branch, 'master'
 set :git_shallow_clone, 1
 set :scm_verbose, true
   
 # roles (servers)
-role :web, web_servers
-role :app, web_servers
+role :web, "ewrpweb01a.binaryitsystems.com", "ewrpweb01b.binaryitsystems.com"
+role :app, "ewrpweb01a.binaryitsystems.com", "ewrpweb01b.binaryitsystems.com"
 role :db,  "ewrpsql01a.binaryitsystems.com", :primary => true
    
 # deploy config
