@@ -1,6 +1,6 @@
 require 'bundler/capistrano'
 set :user, 'aaron.seibert'
-set :applicationdir, "/var/www/vhosts/#{domain}"
+set :applicationdir, "/var/nfs/www_files/#{domain}"
 set :gateway, 'aaron.seibert@ewrpmgmt01.binaryitsystems.com'
 
 set :scm, 'git'
@@ -11,9 +11,10 @@ set :git_shallow_clone, 1
 set :scm_verbose, true
   
 # roles (servers)
-role :web, "ewrpweb01a.binaryitsystems.com", "ewrpweb01b.binaryitsystems.com"
-role :app, "ewrpmgmt01.binaryitsystems.com"
-role :db,  "ewrpsql01a.binaryitsystems.com", :primary => true
+role :nfs, "ewrpmgmt01.binaryitsystems.com"
+role :web, "ewrpweb01a.binaryitsystems.com", "ewrpweb01b.binaryitsystems.com", :no_release => true
+role :app, "ewrpweb01a.binaryitsystems.com", "ewrpweb01b.binaryitsystems.com", :no_release => true
+role :db,  "ewrpmgmt01.binaryitsystems.com", :primary => true
    
 # deploy config
 set :deploy_to, applicationdir
