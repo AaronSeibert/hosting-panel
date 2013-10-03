@@ -14,6 +14,10 @@ group :production do
   gem 'mysql2'
 end
 
+# Use capistrano for deployment
+
+gem 'capistrano'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 
