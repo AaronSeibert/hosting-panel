@@ -3,9 +3,14 @@ HostingPanel::Application.routes.draw do
   devise_for :users
   resources :plans
 
-  resources :clients
+  resources :clients do
+    collection do
+      get 'search'
+    end
+  end
 
   resources :sites
+  resources :subscriptions
 
   resources :domains
 

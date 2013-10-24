@@ -8,6 +8,11 @@ class ClientsController < ApplicationController
     @clients = Client.all
   end
 
+  def search
+    @clients = Client.where("name LIKE ?", "#{params[:q]}%")
+    render :json => @clients
+  end
+
   # GET /clients/1
   # GET /clients/1.json
   def show
