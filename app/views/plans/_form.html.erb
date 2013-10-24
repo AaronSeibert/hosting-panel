@@ -1,29 +1,45 @@
-<%= form_for(@plan) do |f| %>
-  <% if @plan.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@plan.errors.count, "error") %> prohibited this plan from being saved:</h2>
-
-      <ul>
-      <% @plan.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+<%= render partial: 'global/forms/modal_header', locals: {:title => "Add New Plan"} %>
+<%= form_for(@plan, :remote => true, :html => {:class => "form-horizontal", :role => "form"}) do |f| %> 
+<div class="modal-body">
+  <div id="form-errors">
+    <%= modal_flash(@plan, "plan") %>
+  </div>
+  
+  <div class="form-group">
+    <%= f.label :remote_id, "Plan ID", :class => "col-lg-2 control-label" %>
+    <div class="col-lg-6">
+      <%= f.text_field :remote_id, :class => "form-control" %>
     </div>
-  <% end %>
+    <div class="col-lg-4">
+      <div class="checkbox">
+        <%= f.label :prorate do %>
+          <%= f.check_box :prorate %>Prorate Plan
+        <% end %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <%= f.label :price, "Bill", :class => "col-lg-2 control-label" %>
+    <div class="col-lg-4 ">
+      <div class="input-group">
+        <span class="input-group-addon">$</span>
+        <%= f.text_field :price, :class => "form-control" %>
+      </div>
+    </div>
+    <%= f.label :billing_interval, "every", :class => "col-lg-2 control-label" %>
+    <div class="col-lg-4">
+      <%= f.select(:billing_interval, options_for_select([['Month', 'month'], ['6 Months', 'biannual'], ['Year','year']]), {}, {:class => "form-control"}) %>
+    </div>
+  </div>
 
-  <div class="field">
-    <%= f.label :remote_id %><br>
-    <%= f.text_field :remote_id %>
+  <div class="form-group">
+    <%= f.label :description, :class => "col-lg-2 control-label" %>
+    <div class="col-lg-10">
+      <%= f.text_area :description, :class => "form-control" %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :price %><br>
-    <%= f.text_field :price %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  
+
+<%= render partial: "global/forms/modal_footer", locals: { :f => f } %>
 <% end %>

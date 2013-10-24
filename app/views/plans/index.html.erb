@@ -8,6 +8,7 @@
         <th>Price</th>
         <th>Billing Interval</th>
         <th>Description</th>
+        <th></th>
       </tr>
     </thead>
   
@@ -18,6 +19,10 @@
           <td><%= number_to_currency(plan.price) %></td>
           <td><%= plan.interval_count %> <%= plan.interval %></td>
           <td><%= plan.description %></td>
+          <td>
+            <%= link_to content_tag(:i, " Edit Plan", :class => "icon-edit"), edit_plan_path(plan, :format => :js), :class=>"btn btn-primary btn-xs modal-form", :remote => true, data:{ toggle: "modal", target: "#modal-window" } %>
+            <%= link_to content_tag(:i, " Delete Plan", :class => "icon-remove"), plan, method: :delete, :class=>"btn btn-danger btn-xs", data: { title: "Delete Plan", message: "Are you sure you want to delete " + plan.remote_id + "?"} %>
+          </td>
         </tr>
       <% end %>
     </tbody>
@@ -25,3 +30,4 @@
 </div>
 
 <br>
+<%= link_to content_tag(:i, " New Plan", :class => "icon-plus"), new_plan_path(), :class=>"btn btn-success btn-xs new-plan-modal-form-init", :remote => true, data:{ toggle: "modal", target: "#modal-window" } %>

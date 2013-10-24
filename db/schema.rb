@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130903170327) do
+ActiveRecord::Schema.define(version: 20131023233249) do
 
   create_table "clients", force: true do |t|
     t.string   "name"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20130903170327) do
     t.datetime "updated_at"
     t.string   "interval"
     t.integer  "interval_count"
+    t.boolean  "prorate"
   end
 
   create_table "sites", force: true do |t|
