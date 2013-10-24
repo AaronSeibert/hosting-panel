@@ -41,17 +41,20 @@ class SubscriptionsController < ApplicationController
             :customer => @subscription.client.stripe_customer_id,
             :amount => (@subscription.plan.prorated_charge*100).floor,
             :currency => "usd",
-            :description => @subscription.plan.description + " - Pro-rated Charge for " + @subscription.domains.first.url
+            :description => @subscription.plan.description + " - " + @subscription.description + " - Pro-rated Charge"
           )
           invoice = Stripe::Invoice.create(
             :customer => @subscription.client.stripe_customer_id
           )
           invoice.pay
+          @subscription.last_invoiced = Date.today
+          @subscription.next_bill_date = @subscription.plan.next_bill_date
+          @subscription.save
         rescue Exception => exc
           logger.error("Oh no! There was an error adding the invoice item: #{exc.message}")
         end
     
-        format.html { redirect_to clients_url, success: 'Subscription was successfully created.' }
+        format.html { redirect_to subscriptions_url, success: 'Subscription was successfully created.' }
         format.json { render action: 'show', status: :created, location: @subscription }
       else  
         format.js   { render action: 'new' }
