@@ -18,7 +18,7 @@ class Subscription < ActiveRecord::Base
             :customer => s.client.stripe_customer_id,
             :amount => (s.plan.price*100).floor,
             :currency => "usd",
-            :description => s.plan.description + " - " + s.site.domains.first.url
+            :description => s.plan.description + " - " + s.description
           )
           s.last_invoiced = Date.today
           s.next_bill_date = s.plan.next_bill_date
