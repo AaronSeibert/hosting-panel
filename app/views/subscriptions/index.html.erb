@@ -1,0 +1,36 @@
+<h1>Listing subscriptions</h1>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Subscription</th>
+        <th>Plan</th>
+        <th>Amount</th>
+        <th>Last Bill Date</th>
+        <th>Next Bill Date</th>
+      </tr>
+    </thead>
+  
+    <tbody>
+      <% @subscriptions.each do |subscription| %>
+        <tr>
+          <td><%= subscription.id %></td>
+          <td><%= subscription.client.name %></td>
+          <td><%= subscription.plan.remote_id %></td>
+          <td><%= number_to_currency(subscription.plan.price) %></td>
+          <td><%= subscription.last_invoiced %></td>
+          <td><%= subscription.next_bill_date %></td>
+          <td>
+            <%= link_to content_tag(:i, " Edit", :class => "icon-edit"), edit_subscription_path(subscription, :format => :js), :class=>"btn btn-primary btn-xs modal-form", :remote => true, data:{ toggle: "modal", target: "#modal-window" } %>
+            <%= link_to content_tag(:i, " Delete", :class => "icon-remove"), subscription, method: :delete, :class=>"btn btn-danger btn-xs", data: { title: "Delete Subscription", message: "Are you sure you want to delete this subscription?"} %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<br>
+<%= link_to content_tag(:i, " New Subscription", :class => "icon-plus"), new_subscription_path(), :class=>"btn btn-success btn-xs new-subscription-modal-form-init", :remote => true, data:{ toggle: "modal", target: "#modal-window" } %>
