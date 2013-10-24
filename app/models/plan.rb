@@ -2,6 +2,10 @@ class Plan < ActiveRecord::Base
   has_many :sites
   has_many :subscriptions
   
+  attr_accessor :billing_interval
+  
+  before_save :set_interval
+  
   def next_bill_date
     case self.interval
     when "month"
@@ -55,7 +59,23 @@ class Plan < ActiveRecord::Base
   end
   
   def self.intervals
-    return ["month", "biannual", "annual"]
+    return ["month" => "Month", "biannual" => "6 Months", "annual" => "Year"]
+  end
+  
+  def interval_map(task)
+
+    @intervals = {
+      'month' => {'interval_count' => 1, 'interval' => 'month'},
+      'biannual' => {'interval_count' => 6, 'interval' => 'month'},
+      'year' => {'interval_count' => 1, 'interval' => 'year'},
+    }
+    
+    case task
+    when "count"
+      return @intervals[self.billing_interval]['interval_count']
+    when "interval"
+      return @intervals[self.billing_interval]['interval']
+    end
   end
   
   def self.get_stripe_plans
@@ -100,4 +120,10 @@ class Plan < ActiveRecord::Base
       end
     end
   end
+  
+  private
+    def set_interval
+      self.interval_count=self.interval_map('count')
+      self.interval=self.interval_map('interval')
+    end
 end
