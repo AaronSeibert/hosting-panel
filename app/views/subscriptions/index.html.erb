@@ -19,7 +19,7 @@
           <td><%= subscription.id %></td>
           <td><%= subscription.client.name %></td>
           <td><%= subscription.plan.remote_id %></td>
-          <td><%= number_to_currency(subscription.plan.price) %></td>
+          <td><%= number_to_currency(subscription.recurring_cost) %></td>
           <td><%= subscription.last_invoiced %></td>
           <td><%= subscription.next_bill_date %></td>
           <td>

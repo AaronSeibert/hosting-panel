@@ -1,3 +1,24 @@
 // Place all the styles related to the Clients controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#card_details {
+  background: #E6E6E6;
+  height: auto;
+  margin: 10px;
+}
+
+.credit-card {
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+  padding-left: 50px;
+  background-position: 10px; 
+}
+
+.Visa {
+  background-image: asset-url("payment-icons/visa.png");
+}
+
+.MasterCard {
+  background-image: asset-url("payment-icons/mastercard.png");
+}

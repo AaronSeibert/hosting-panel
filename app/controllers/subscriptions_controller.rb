@@ -31,31 +31,35 @@ class SubscriptionsController < ApplicationController
   # POST /subscriptions.json
   def create
     @subscription = Subscription.new(subscription_params)
+    if (!@subscription.quantity)
+      @subscription.quantity = 1
+    end
 
     respond_to do |format|
       if @subscription.save
-             
+        
+        if !@subscription.bill_now    
         # Create the pro-rated charge
-        begin
-          Stripe::InvoiceItem.create(
-            :customer => @subscription.client.stripe_customer_id,
-            :amount => (@subscription.plan.prorated_charge*100).floor,
-            :currency => "usd",
-            :description => @subscription.plan.description + " - " + @subscription.description + " - Pro-rated Charge"
-          )
-          invoice = Stripe::Invoice.create(
-            :customer => @subscription.client.stripe_customer_id
-          )
-          invoice.pay
-          @subscription.last_invoiced = Date.today
-          @subscription.next_bill_date = @subscription.plan.next_bill_date
-          @subscription.save
-        rescue Exception => exc
-          logger.error("Oh no! There was an error adding the invoice item: #{exc.message}")
+          begin
+            Stripe::InvoiceItem.create(
+              :customer => @subscription.client.stripe_customer_id,
+              :amount => (@subscription.plan.prorated_charge*100*@subscription.quantity).floor,
+              :currency => "usd",
+              :description => @subscription.plan.description + " - " + @subscription.description + " - Pro-rated Charge"
+            )
+            invoice = Stripe::Invoice.create(
+              :customer => @subscription.client.stripe_customer_id
+            )
+            invoice.pay
+            @subscription.last_invoiced = Date.today
+            @subscription.save
+          rescue Exception => exc
+            logger.error("Oh no! There was an error adding the invoice item: #{exc.message}")
+          end
         end
     
         format.html { redirect_to subscriptions_url, success: 'Subscription was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @subscription }
+        format.json { render action: 'show', status: :created, location: @subscription }    
       else  
         format.js   { render action: 'new' }
         format.html { render action: 'new' }
@@ -101,7 +105,7 @@ class SubscriptionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def subscription_params
-      params.require(:subscription).permit(:client_id, :description, :plan_id, :primary_domain_id, 
+      params.require(:subscription).permit(:client_id, :description, :plan_id, :primary_domain_id, :quantity, :next_bill_date, :bill_now,
         :domains_attributes => [:id, :subscription_id, :url, :ssl_enabled]
       )
     end

@@ -1,13 +1,16 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.0'
+gem 'rails', '4.0.3'
 
 group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'execjs'
   gem 'therubyracer'
   gem 'sqlite3'
+  gem 'foreman'
+  gem 'unicorn'
+  gem 'meta_request'
 end
 
 group :production do
@@ -51,6 +54,9 @@ gem 'devise'
 
 # rufus
 gem 'rufus-scheduler'
+
+# datepicker
+gem 'bootstrap-datepicker-rails'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

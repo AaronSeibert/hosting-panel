@@ -4,18 +4,63 @@
   <div id="form-errors">
     <%= modal_flash(@client, "client") %>
   </div>
-  <%= f.hidden_field :stripe_customer_id %>
-  <%= f.hidden_field :stripe_card_token %>
   <div class="form-group">
-    <%= f.label :name, :class => "col-lg-2 control-label" %>
-    <div class="col-lg-10">
-      <%= f.text_field :name, :class => "form-control" %>
+    <%= f.label :name, :class => "col-lg-3 control-label" %>
+    <div class="col-lg-9">
+      <%= f.text_field :name, :autofocus => true, :class => "form-control" %>
     </div>
   </div>
-  <%= render "credit_card_fields", :f => f %>
-  <div id="stripe_error">
-    <noscript>JavaScript is not enabled and is required for this form. First enable it in your web browser settings.</noscript>
+  <div class="form-group">
+    <%= f.label :billing_contact, :class => "col-lg-3 control-label" %>
+    <div class="col-lg-9">
+      <%= f.text_field :contact_name, :class => "form-control" %>
+    </div>
   </div>
+  <div class="form-group">
+    <%= f.label :billing_email, :class => "col-lg-3 control-label" %>
+    <div class="col-lg-9">
+      <%= f.email_field :billing_email, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :address_one, "Address 1", :class => "col-lg-3 control-label" %>
+    <div class="col-lg-9">
+      <%= f.text_field :address_one, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :address_two, "Address 2", :class => "col-lg-3 control-label" %>
+    <div class="col-lg-9">
+      <%= f.text_field :address_two, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :city, :class => "col-lg-3 control-label" %>
+    <div class="col-lg-9">
+      <%= f.text_field :city, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :state, :class => "col-lg-3 control-label" %>
+    <div class="col-lg-5">
+      <%= f.select :state, options_for_select(us_states), {}, class: "form-control" %>
+    </div>
+    <%= f.label :zip, :class => "col-lg-1 control-label" %>
+    <div class="col-lg-3">
+      <%= f.text_field :zip, :class => "form-control" %>
+    </div>
+  </div>
+  <% if @client.new_record? %>
+  <% else %>
+    <% if @client.get_remote_cards.count == 0 %>
+      <%= render "credit_card_fields", :f => f %>
+    <% else %>
+      <%= render "existing_credit_card", :f => f %>
+    <% end %>
+    <div id="stripe_error">
+      <noscript>JavaScript is not enabled and is required for this form. First enable it in your web browser settings.</noscript>
+    </div>
+  <% end %>
 </div>
 <%= render partial: "global/forms/modal_footer", locals: { :f => f } %>
 <% end %>

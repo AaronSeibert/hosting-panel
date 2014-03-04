@@ -9,18 +9,41 @@ onSubscriptionsLoad = ->
     remote: "/clients/search.json?q=%QUERY"
   ]
   
+  $('#subscription_bill_now').change updateInitialPayment
+  $('#subscription_bill_now').change()
   $('#subscription_plan_id').change updatePlanInfo
   $('#subscription_plan_id').change()
+  $('#subscription_quantity').change updatePriceInfo
   
+updateInitialPayment = ->
+  if ($('#subscription_bill_now').is(':checked'))
+    url = CURRENT_DOMAIN + '/plans/' + $('#subscription_plan_id').val() + '.json'
+    $.getJSON url, (data) ->
+      $('#prorated_charge').html(data.prorated_charge*$('#subscription_quantity').val()).formatCurrency()
+  else
+    $('#prorated_charge').html('0').formatCurrency()
+  
+updatePriceInfo = ->
+  url = CURRENT_DOMAIN + '/plans/' + $('#subscription_plan_id').val() + '.json'
+  $.getJSON url, (data) ->
+    $('#price').html(data.price*$('#subscription_quantity').val()).formatCurrency()
+    $('#prorated_charge').html(data.prorated_charge*$('#subscription_quantity').val()).formatCurrency()
+    updateInitialPayment
+    
 updatePlanInfo = ->
   url = CURRENT_DOMAIN + '/plans/' + $('#subscription_plan_id').val() + '.json'
   $.getJSON url, (data) ->
-    $('#price').html(data.price).formatCurrency()
-    $('#next_bill_date').html(dateFormat(data.next_bill_date, "mmmm dd, yyyy"))
-    $('#prorated_charge').html(data.prorated_charge).formatCurrency()
+    $('#price').html(data.price*$('#subscription_quantity').val()).formatCurrency()
+    $('#subscription_next_bill_date').val(dateFormat(data.next_bill_date, "mm/dd/yyyy"))
+    $('#prorated_charge').html(data.prorated_charge*$('#subscription_quantity').val()).formatCurrency()
+    updateInitialPayment
+    
+    if data.multiple
+      $("#subscription_quantity").prop "disabled", false
+    else
+      $("#subscription_quantity").prop "disabled", true
     
 setClientID = (data) ->
-  console.log(data.id)
   $('#subscription_client_id').val(data.id)
 
 $(document).on 'ajax:success','.new-subscription-modal-form-init', (xhr, data, status) ->
