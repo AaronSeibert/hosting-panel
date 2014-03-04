@@ -7,7 +7,7 @@
     </div>
     <%= label_tag 'next_bill_date', nil, :class => "col-lg-3 control-label" %>
     <div class="col-lg-5">
-      <%= f.text_field :next_bill_date, :value => Time.now.to_s(:db), :class => "control-field datepicker", 'data-behavior' => 'datepicker' %>
+      <%= f.date_field :next_bill_date, :value => Time.now.to_date.to_s, :class => "control-field datepicker"%>
       <!-- <p class="form-control-static" id="next_bill_date">Jan. 1, 2000</p> -->
     </div>
   </div>
