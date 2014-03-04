@@ -3,6 +3,6 @@ require 'rufus/scheduler'
   
 scheduler = Rufus::Scheduler.new
 
-scheduler.cron '0 0 1 * *' do
+scheduler.cron '0 0 * * *' do
     Subscription.create_invoices
 end
