@@ -1,0 +1,11 @@
+<%= f.hidden_field :stripe_customer_id %>
+<fieldset class="existing_credit_card">
+  <legend>Credit Card Details</legend>
+  <div class="form-group">
+    <%= label_tag :card_number, "Card Number ", :class => "control-label col-lg-3" %>
+    <div class="col-lg-5  background-size: 30px 30px;
+  background-repeat: no-repeat;">
+      <%= text_field_tag :card_number, "****-****-****-#{@client.card.last4}", name: nil, :disabled => true, :class => "form-control #{@client.card.type} credit-card" %>
+    </div>
+  </div>
+</fieldset>

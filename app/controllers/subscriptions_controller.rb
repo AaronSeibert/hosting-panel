@@ -38,7 +38,7 @@ class SubscriptionsController < ApplicationController
     respond_to do |format|
       if @subscription.save
         
-        if !@subscription.bill_now    
+        if params[:subscription][:bill_now] == 1
         # Create the pro-rated charge
           begin
             Stripe::InvoiceItem.create(
