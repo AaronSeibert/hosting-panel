@@ -38,6 +38,7 @@ class SubscriptionsController < ApplicationController
     respond_to do |format|
       if @subscription.save
         
+        Rails.logger.debug "bill_now #{params[:subscription][:bill_now]}"
         if params[:subscription][:bill_now] == 1
         # Create the pro-rated charge
           begin
