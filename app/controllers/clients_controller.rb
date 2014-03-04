@@ -47,8 +47,19 @@ class ClientsController < ApplicationController
   # PATCH/PUT /clients/1
   # PATCH/PUT /clients/1.json
   def update
+    Rails.logger.debug "Client params: #{params[:client][:stripe_card_token]}"
     respond_to do |format|
+      if !params[:client][:stripe_customer_id]
+        @client[:stripe_customer_id] = create_stripe_customer(@client)
+        stripe_added=true
+      end
       if @client.update(client_params)
+        if !stripe_added
+          update_stripe_customer(@client)
+        end
+        if params[:client][:stripe_card_token]
+          stripe_add_card(@client, params[:client][:stripe_card_token])
+        end
         format.html { redirect_to clients_url, success: 'Client was successfully updated.' }
         format.json { head :no_content }
       else
@@ -62,6 +73,7 @@ class ClientsController < ApplicationController
   # DELETE /clients/1
   # DELETE /clients/1.json
   def destroy
+    delete_stripe_customer(@client)
     @client.destroy
     respond_to do |format|
       format.html { redirect_to clients_url, success: 'Client was successfully deleted.' }
@@ -71,7 +83,23 @@ class ClientsController < ApplicationController
 
   private
     def create_stripe_customer(client)
-      return Stripe::Customer.create(:description => client.name, :card => client.stripe_card_token).id
+      return Stripe::Customer.create(:description => client.name, :email => client.billing_email).id
+    end
+    def stripe_add_card(client, token)
+      cu = Stripe::Customer.retrieve(client.stripe_customer_id)
+      cu.card = token
+      cu.save
+    end
+    def update_stripe_customer(client)
+      cu = Stripe::Customer.retrieve(client.stripe_customer_id)
+      Rails.logger.debug "Stripe customer object: #{cu}"
+      cu.description = client.name
+      cu.email = client.billing_email
+      cu.save
+    end
+    def delete_stripe_customer(client)
+      cu = Stripe::Customer.retrieve(client.stripe_customer_id)
+      cu.delete
     end
     # Use callbacks to share common setup or constraints between actions.
     def set_client
@@ -80,6 +108,6 @@ class ClientsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def client_params
-      params.require(:client).permit(:name, :stripe_customer_id, :stripe_card_token)
+      params.require(:client).permit(:name, :stripe_customer_id, :stripe_card_token, :address_one, :address_two, :city, :state, :zip, :billing_email, :contact_name)
     end
 end

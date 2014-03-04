@@ -3,14 +3,12 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
   
 onClientsLoad = ->
-  console.log "In onClientsLoad"
   Stripe.setPublishableKey($('meta[name="stripe-key"]').attr('content'))
   customer.setupForm()
 
 customer =
   setupForm: ->
-    console.log("Overriding form submit")
-    $('#new_client').submit ->
+    $('.new_credit_card').parents('form:first').submit ->
       $('input[type=submit]').attr('disabled', true)
       customer.createToken()
       return false;
@@ -21,7 +19,10 @@ customer =
       cvc: $('#card_code').val()
       expMonth: $('#card_month').val()
       expYear: $('#card_year').val()
+      customer: $('#client_stripe_customer_id').val()
+    console.log("Sending Token to Stripe")
     Stripe.card.createToken(card, customer.handleStripeResponse)
+    console.log("Received response from Stripe")
   
   processCard: ->
     card =
@@ -29,16 +30,17 @@ customer =
       cvc: $('#card_code').val()
       expMonth: $('#card_month').val()
       expYear: $('#card_year').val()
+      customer: $('#client_stripe_customer_id').val()
     Stripe.createToken(card, customer.handleStripeResponse)
   
   handleStripeResponse: (status, response) ->
     if status == 200
       $('#client_stripe_card_token').val(response.id)
-      $('#new_client').trigger("submit.rails")
+      $('.new_credit_card').trigger("submit.rails")
     else
       $('#stripe_error').text(response.error.message)
       $('input[type=submit]').attr('disabled', false)
          
-$(document).on 'ajax:success','.new-client-modal-form-init', (xhr, data, status) ->
+$(document).on 'ajax:success','.client-modal-form-init', (xhr, data, status) ->
   # do something with `data`, which is a JS object from your JSON response
   onClientsLoad()

@@ -3,6 +3,12 @@ class Subscription < ActiveRecord::Base
   belongs_to :plan
   belongs_to :site
   
+  attr_accessor :bill_now
+  
+  def recurring_cost
+    plan.price * quantity
+  end
+  
   def self.create_invoices
     # For testing only!!!
     # End Testing
@@ -16,7 +22,7 @@ class Subscription < ActiveRecord::Base
         begin
           Stripe::InvoiceItem.create(
             :customer => s.client.stripe_customer_id,
-            :amount => (s.plan.price*100).floor,
+            :amount => (s.plan.price*100*s.quantity).floor,
             :currency => "usd",
             :description => s.plan.description + " - " + s.description
           )

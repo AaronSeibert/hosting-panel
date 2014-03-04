@@ -88,3 +88,13 @@ a.btn {
 .tt-suggestion p {
     margin: 0;
 }
+
+.inset-shadow {
+  box-shadow: inset 0 0 2px 2px #ccc;
+}
+
+.border-radius {
+  border-radius: 4px;
+}
+
+.datepicker {z-index: 1151 !important;}

@@ -1,22 +1,25 @@
 <fieldset>
   <legend>Billing Details</legend>
   <div class="form-group">
-    <%= label_tag 'price', nil, :class => "col-lg-3 control-label" %>
+    <%= label_tag 'price', nil, :class => "col-lg-2 control-label" %>
     <div class="col-lg-2">
       <p class="form-control-static" id="price">$0.00</p>
     </div>
     <%= label_tag 'next_bill_date', nil, :class => "col-lg-3 control-label" %>
-    <div class="col-lg-4">
-      <p class="form-control-static" id="next_bill_date">Jan. 1, 2000</p>
+    <div class="col-lg-5">
+      <%= f.text_field :next_bill_date, :value => Time.now.to_s(:db), :class => "control-field datepicker", 'data-behavior' => 'datepicker' %>
+      <!-- <p class="form-control-static" id="next_bill_date">Jan. 1, 2000</p> -->
     </div>
   </div>
   <div class="form-group">
-    <%= label_tag 'prorated_charge', nil, :class => "col-lg-5 control-label" %>
+    <%= label_tag 'prorated_charge', "Inital Payment: ", :class => "col-lg-3 control-label" %>
     <div class="col-lg-2">
       <p class="form-control-static" id="prorated_charge">$0.00</p>
     </div>
-    <div class="col-lg-5">
-      <p class="form-control-static"> (Billed Immediately)</p>
+    <div class="checkbox col-lg-7">
+      <label>
+        <%= f.check_box 'bill_now', :checked => true %> Process initial payment now
+      </label>
     </div>
   </div>
 </fieldset>

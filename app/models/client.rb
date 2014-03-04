@@ -16,24 +16,37 @@ class Client < ActiveRecord::Base
     
     case interval
       when "month"
-        self.plans.each do |p|
-          if p.interval == "month" and p.interval_count == 1
-            amount += p.price
+        self.subscriptions.each do |s|
+          if s.plan.interval == "month" and s.plan.interval_count == 1
+            amount += (s.plan.price * s.quantity)
           end
         end
       when "biannual"
-        self.plans.each do |p|
-        if p.interval == "month" and p.interval_count == 6
-          amount += p.price
+        self.subscriptions.each do |s|
+        if s.plan.interval == "month" and s.plan.interval_count == 6
+          amount += (s.plan.price * s.quantity)
         end
       end
       when "annual"
-        self.plans.each do |p|
-        if p.interval == "year"
-          amount += p.price
+        self.subscriptions.each do |s|
+        if s.plan.interval == "year"
+          amount += (s.plan.price * s.quantity)
         end
       end
     end
     return amount
+  end
+
+  def get_remote_cards
+    if self.stripe_customer_id
+      return Stripe::Customer.retrieve(self.stripe_customer_id).cards
+    end
+  end
+  
+  def card
+    if self.stripe_customer_id
+      c = Stripe::Customer.retrieve(self.stripe_customer_id)
+      card = c.cards.retrieve(c.default_card)
+    end
   end
 end

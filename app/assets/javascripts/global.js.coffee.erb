@@ -1,21 +1,45 @@
 # Create our function for detecting modal form button clicks
 bindModalForm = ->
   $(".modal-form").click ->
+    console.log "form clicked"
     href = $(@).attr "href"
     $.get href, (data) ->
-      $("#modal-content").html data
       
 fadeFlashMessages = ->
   $(".alert").delay(2000).fadeOut(2000)
+  
     
 onLoadEvents = ->
-  fadeFlashMessages()  
-      
-$(document).on 'ready page:load', onLoadEvents
+  fadeFlashMessages()
+  
+$(document).on 'ready page:load ajax:success', ->
+  $('[data-behavior~=datepicker]').datepicker
+    format: "mm/dd/yyyy"
+    autoclose: true
+  
+setModalContent = ->
+  $('.modal-content').html('
+        <div class="modal-header"><h4>Loading... Please wait</h4></div>
+        <div class="modal-body" style="text-align: center;"><%= image_tag("loader.gif", size: "50")%></div>
+        <div class="modal-footer"></div>
+  ')
+   
+$(document).on "ready page:load", ->
+  
+  setModalContent()
+  onLoadEvents()
+  
+  # Destroy modal content on close
+  $('#modal-window').on "hidden.bs.modal", (e) ->
+    #$(e.target).removeData("bs.modal").find(".modal-content").empty()
+    setModalContent()
+    return
 
 # Handle ajax form errors
-$(document).on 'ajax:success', 'form[data-remote]', (xhr, data, status) ->
+$(document).on 'ajax:success', 'form[data-remote]', (evt, data, status, xhr) ->
+  #console.log data
   # do something with `data`, which is a JS object from your JSON response
+  #console.log "ajax:success"
   $("#modal-window").modal('hide')
   document.open()
   document.write(data)
@@ -71,12 +95,3 @@ $.rails.allowAction = (element) ->
   modal_html.modal()
   # Prevent the original link from working
   return false
-  
-remove_fields = (link) ->
-  $(link).prev("input[type=hidden]").val "1"
-  $(link).closest(".fields").hide()
-  
-add_fields = (link, association, content) ->
-  new_id = new Date().getTime()
-  regexp = new RegExp("new_" + association, "g")
-  $(link).parent().before content.replace(regexp, new_id)

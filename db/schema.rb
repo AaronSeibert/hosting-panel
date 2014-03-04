@@ -11,13 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131024220652) do
+ActiveRecord::Schema.define(version: 20140304154831) do
 
   create_table "clients", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "stripe_customer_id"
+    t.string   "address_one"
+    t.string   "address_two"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.string   "billing_email"
+    t.string   "contact_name"
   end
 
   create_table "domains", force: true do |t|
@@ -39,6 +46,7 @@ ActiveRecord::Schema.define(version: 20131024220652) do
     t.string   "interval"
     t.integer  "interval_count"
     t.boolean  "prorate"
+    t.boolean  "multiple"
   end
 
   create_table "sites", force: true do |t|
@@ -60,6 +68,7 @@ ActiveRecord::Schema.define(version: 20131024220652) do
     t.date     "last_invoiced"
     t.integer  "site_id"
     t.text     "description"
+    t.integer  "quantity",       default: 1
   end
 
   add_index "subscriptions", ["client_id"], name: "index_subscriptions_on_client_id"
