@@ -12,7 +12,7 @@ fadeFlashMessages = ->
 onLoadEvents = ->
   fadeFlashMessages()
   
-$(document).on 'ready page:load ajax:success', ->
+$(document).on 'ready page:load ajax:success ajax:error', ->
   $('[data-behavior~=datepicker]').datepicker
     format: "mm/dd/yyyy"
     autoclose: true

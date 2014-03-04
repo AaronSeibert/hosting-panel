@@ -34,7 +34,7 @@ updatePlanInfo = ->
   url = CURRENT_DOMAIN + '/plans/' + $('#subscription_plan_id').val() + '.json'
   $.getJSON url, (data) ->
     $('#price').html(data.price*$('#subscription_quantity').val()).formatCurrency()
-    $('#subscription_next_bill_date').val(dateFormat(data.next_bill_date, "mm/dd/yyyy"))
+    $('#subscription_next_bill_date').val(dateFormat(data.next_bill_date, "yyyy-mm-dd"))
     $('#prorated_charge').html(data.prorated_charge*$('#subscription_quantity').val()).formatCurrency()
     updateInitialPayment
     

@@ -5,6 +5,8 @@ class Subscription < ActiveRecord::Base
   
   attr_accessor :bill_now
   
+  validates_presence_of :client
+  
   def recurring_cost
     plan.price * quantity
   end
