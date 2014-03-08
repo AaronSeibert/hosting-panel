@@ -3,24 +3,28 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.3'
 
+gem 'foreman'
+
+gem 'execjs'
+
+gem 'unicorn'
+
 group :development, :test do
   # Use sqlite3 as the database for Active Record
-  gem 'execjs'
   gem 'therubyracer'
   gem 'sqlite3'
-  gem 'foreman'
-  gem 'unicorn'
   gem 'meta_request'
 end
 
 group :production do
   gem 'mysql2'
-  gem 'execjs'
 end
 
 # Use capistrano for deployment
 
-gem 'capistrano'
+gem 'capistrano',  '~> 3.1'
+gem 'capistrano-rails', '~> 1.1'
+gem 'capistrano-rvm'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'

@@ -39,7 +39,7 @@ class SubscriptionsController < ApplicationController
       if @subscription.save
         
         Rails.logger.debug "bill_now #{params[:subscription][:bill_now]}"
-        if params[:subscription][:bill_now] == 1
+        if params[:subscription][:bill_now] == "1"
         # Create the pro-rated charge
           begin
             Stripe::InvoiceItem.create(
