@@ -19,3 +19,4 @@ config/database.yml
 config/deploy.rb
 config/deploy/*.rb
 lib/capistrano/tasks/*.cap
+Capfile
