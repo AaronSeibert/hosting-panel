@@ -20,11 +20,12 @@ group :production do
   gem 'mysql2'
 end
 
-# Use capistrano for deployment
-
-gem 'capistrano',  '~> 3.1'
-gem 'capistrano-rails', '~> 1.1'
-gem 'capistrano-rvm'
+group :development do
+  # Use capistrano for deployment
+  gem 'capistrano',  '~> 3.1'
+  gem 'capistrano-rails', '~> 1.1'
+  gem 'capistrano-rvm'
+end
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'

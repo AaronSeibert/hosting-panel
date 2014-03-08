@@ -23,3 +23,7 @@ require 'capistrano/rails/migrations'
 
 # Loads custom tasks from `lib/capistrano/tasks' if you have any defined.
 Dir.glob('lib/capistrano/tasks/*.cap').each { |r| import r }
+
+server 'ewrpweb01a', roles: [:web, :app, :workers]
+server 'ewrpweb01b', roles: [:web, :app, :workers]
+server 'ewrpsql01', roles: [:db]
