@@ -12,11 +12,6 @@ fadeFlashMessages = ->
 onLoadEvents = ->
   fadeFlashMessages()
   
-$(document).on 'ready page:load ajax:success ajax:error', ->
-  $('[data-behavior~=datepicker]').datepicker
-    format: "mm/dd/yyyy"
-    autoclose: true
-  
 setModalContent = ->
   $('.modal-content').html('
         <div class="modal-header"><h4>Loading... Please wait</h4></div>
