@@ -17,6 +17,7 @@
 config/initializers/stripe.rb
 config/database.yml
 config/deploy.rb
-config/deploy/*.rb
-lib/capistrano/tasks/*.cap
+config/deploy
+lib/capistrano
 Capfile
+/shared/
