@@ -14,9 +14,20 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+<<<<<<< HEAD
 config/initializers/stripe.rb
 config/database.yml
 config/deploy.rb
+=======
+
+# items in config to ignore
+config/initializers/stripe.rb
+config/initializers/secret_token.rb
+config/database.yml
+config/deploy.rb
+config/unicorn.rb
+
+>>>>>>> a90a039b6203869fc98b4941e78c045d4ddb3294
 config/deploy
 lib/capistrano
 Capfile
