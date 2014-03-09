@@ -21,3 +21,4 @@ config/deploy
 lib/capistrano
 Capfile
 /shared/
+/shared_deploy/
