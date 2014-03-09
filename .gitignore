@@ -14,11 +14,15 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+# items in config to ignore
 config/initializers/stripe.rb
+config/initializers/secret_token.rb
 config/database.yml
 config/deploy.rb
+config/unicorn.rb
+
 config/deploy
 lib/capistrano
 Capfile
 /shared/
-/shared_deploy/
