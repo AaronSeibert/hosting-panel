@@ -32,3 +32,4 @@ config/deploy
 lib/capistrano
 Capfile
 /shared/
+Procfile
