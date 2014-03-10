@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-HostingPanel::Application.config.secret_key_base = 'cb305f4d4da4ce89b54d4a6e01a91a52983d88d41e0e8815e68dcb5df1fad6e54ce3725e86c1da09225b8b27e556c0ff8a3dfb4b0e40f0ade33b22f8cd056996'
+HostingPanel::Application.config.secret_key_base = '3fbfbe372f382078cd3511287b3c74ac864d8698895760345a5071ea369e27cb9f466fb1be72b5a3552ea98e0b3e879fe2ab7521c69a47a23d1e233605f30357'
