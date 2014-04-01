@@ -38,22 +38,10 @@ class SubscriptionsController < ApplicationController
     respond_to do |format|
       if @subscription.save
         
-        Rails.logger.debug "bill_now #{params[:subscription][:bill_now]}"
         if params[:subscription][:bill_now] == "1"
         # Create the pro-rated charge
           begin
-            Stripe::InvoiceItem.create(
-              :customer => @subscription.client.stripe_customer_id,
-              :amount => (@subscription.plan.prorated_charge*100*@subscription.quantity).floor,
-              :currency => "usd",
-              :description => @subscription.plan.description + " - " + @subscription.description + " - Pro-rated Charge"
-            )
-            invoice = Stripe::Invoice.create(
-              :customer => @subscription.client.stripe_customer_id
-            )
-            invoice.pay
-            @subscription.last_invoiced = Date.today
-            @subscription.save
+            
           rescue Exception => exc
             logger.error("Oh no! There was an error adding the invoice item: #{exc.message}")
           end

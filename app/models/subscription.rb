@@ -11,6 +11,27 @@ class Subscription < ActiveRecord::Base
     plan.price * quantity
   end
   
+  def add_invoice_item
+    Stripe::InvoiceItem.create(
+      :customer => self.client.stripe_customer_id,
+      :amount => (self.plan.prorated_charge*100*self.quantity).floor,
+      :currency => "usd",
+      :description => self.plan.description + " - " + self.description + " - Pro-rated Charge"
+    )
+  end
+  
+  def create_invoice
+    invoice = Stripe::Invoice.create(
+      :customer => @subscription.client.stripe_customer_id
+    )
+  end
+  
+  def pay_invoice()
+      invoice.pay
+      @subscription.last_invoiced = Date.today
+      @subscription.save
+  end
+  
   def self.create_invoices
     # For testing only!!!
     # End Testing

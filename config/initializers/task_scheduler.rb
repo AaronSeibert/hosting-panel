@@ -1,8 +1,11 @@
 require 'rubygems'
 require 'rufus/scheduler'
-  
-scheduler = Rufus::Scheduler.new
 
-scheduler.cron '0 0 * * *' do
-    Subscription.create_invoices
+
+if `hostname -f` == 'ewrpweb01a.binaryitsystems.com' || Rails.env.development
+  scheduler = Rufus::Scheduler.new
+  
+  scheduler.cron '0 0 * * *' do
+      Subscription.create_invoices
+  end
 end
