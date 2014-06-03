@@ -55,7 +55,7 @@ gem 'jbuilder', '~> 1.2'
 gem 'stripe'
 
 # font-awesome
-gem 'font-awesome-rails'
+gem 'font-awesome-sass'
 
 # devise
 gem 'devise'
