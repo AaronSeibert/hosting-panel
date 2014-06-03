@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140603212511) do
+ActiveRecord::Schema.define(version: 20140603215617) do
 
   create_table "clients", force: true do |t|
     t.string   "name"
@@ -96,6 +96,7 @@ ActiveRecord::Schema.define(version: 20140603212511) do
     t.integer  "site_id"
     t.text     "description"
     t.integer  "quantity",       default: 1
+    t.boolean  "auto_bill"
   end
 
   add_index "subscriptions", ["client_id"], name: "index_subscriptions_on_client_id"

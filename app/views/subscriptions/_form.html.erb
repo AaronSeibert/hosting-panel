@@ -36,6 +36,14 @@
       <%= f.text_area :description, :class => "form-control" %>
     </div>
   </div>
+  <div class="form-group">
+    <%= label_tag 'auto_bill', "Auto Bill: ", :class => "col-lg-3 control-label" %>
+    <div class="checkbox col-lg-9">
+      <label>
+        <%= f.check_box 'auto_bill', :checked => true %> Charge Automatically
+      </label>
+    </div>
+  </div>
   <% if @subscription.new_record? %>
     <%= render partial: "billing_details", locals: { :f => f } %>
   <% end %>

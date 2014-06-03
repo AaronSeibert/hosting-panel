@@ -8,6 +8,7 @@
         <th>Subscription</th>
         <th>Plan</th>
         <th>Amount</th>
+        <th>Auto Bill</th>
         <th>Last Bill Date</th>
         <th>Next Bill Date</th>
       </tr>
@@ -20,6 +21,7 @@
           <td><%= subscription.client.name %></td>
           <td><%= subscription.plan.remote_id %></td>
           <td><%= number_to_currency(subscription.recurring_cost) %></td>
+          <td><%= subscription.auto_bill %></td>
           <td><%= subscription.last_invoiced %></td>
           <td><%= subscription.next_bill_date %></td>
           <td>

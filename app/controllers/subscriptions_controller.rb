@@ -94,7 +94,7 @@ class SubscriptionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def subscription_params
-      params.require(:subscription).permit(:client_id, :description, :plan_id, :primary_domain_id, :quantity, :next_bill_date, :bill_now,
+      params.require(:subscription).permit(:client_id, :description, :plan_id, :primary_domain_id, :quantity, :next_bill_date, :bill_now, :auto_bill,
         :domains_attributes => [:id, :subscription_id, :url, :ssl_enabled]
       )
     end

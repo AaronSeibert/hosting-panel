@@ -36,7 +36,7 @@ class Subscription < ActiveRecord::Base
     # For testing only!!!
     # End Testing
     
-    @subscriptions = Subscription.where(['next_bill_date <= ?', Date.today])
+    @subscriptions = Subscription.where(['next_bill_date <= ?', Date.today]).where(:auto_bill => true)
     @clients = @subscriptions.map{|c| c.client}.uniq
     
     # Loop through each subscription that rebills today, create a Stripe invoice item
