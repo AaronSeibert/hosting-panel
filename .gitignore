@@ -31,5 +31,5 @@ config/unicorn.rb
 config/deploy
 lib/capistrano
 Capfile
-shared/*
+shared
 Procfile
