@@ -2,6 +2,7 @@ class Client < ActiveRecord::Base
   has_many :sites, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
   has_many :plans, through: :subscriptions
+  has_many :service_categories, :through => :plans
   
   validates :name, presence: true
   

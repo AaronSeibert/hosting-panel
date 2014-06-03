@@ -1,5 +1,7 @@
 HostingPanel::Application.routes.draw do
 
+  resources :service_categories
+
   devise_for :users
   resources :plans
 

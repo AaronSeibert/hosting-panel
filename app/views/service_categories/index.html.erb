@@ -1,0 +1,27 @@
+<h1>Listing Service Categories</h1>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th></th>
+      </tr>
+    </thead>
+  
+    <tbody>
+      <% @service_categories.each do |cat| %>
+        <tr>
+          <td><%= cat.name %></td>
+          <td>
+            <%= link_to content_tag(:i, " Edit Category", :class => "icon-edit"), edit_service_category_path(cat, :format => :js), :class=>"btn btn-primary btn-xs modal-form", :remote => true, data:{ toggle: "modal", target: "#modal-window" } %>
+            <%= link_to content_tag(:i, " Delete Category", :class => "icon-remove"), cat, method: :delete, :class=>"btn btn-danger btn-xs", data: { title: "Delete Category", message: "Are you sure you want to delete " + cat.name + "?"} %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<br>
+<%= link_to content_tag(:i, " New Category", :class => "icon-plus"), new_service_category_path(), :class=>"btn btn-success btn-xs new-service_category-modal-form-init", :remote => true, data:{ toggle: "modal", target: "#modal-window" } %>

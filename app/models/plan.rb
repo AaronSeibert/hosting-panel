@@ -1,6 +1,7 @@
 class Plan < ActiveRecord::Base
   has_many :sites
   has_many :subscriptions
+  has_and_belongs_to_many :service_categories
   
   attr_accessor :billing_interval
   

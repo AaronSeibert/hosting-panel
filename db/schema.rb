@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140310122716) do
+ActiveRecord::Schema.define(version: 20140603212511) do
 
   create_table "clients", force: true do |t|
     t.string   "name"
@@ -63,6 +63,17 @@ ActiveRecord::Schema.define(version: 20140310122716) do
     t.integer  "interval_count"
     t.boolean  "prorate"
     t.boolean  "multiple"
+  end
+
+  create_table "plans_service_categories", id: false, force: true do |t|
+    t.integer "service_category_id"
+    t.integer "plan_id"
+  end
+
+  create_table "service_categories", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "sites", force: true do |t|
